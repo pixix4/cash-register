@@ -1,35 +1,34 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { NoteBox } from "./NoteBox.tsx";
+import { Envelope } from "./Envelope.tsx";
+import { CoinBox } from "./CoinBox.tsx";
+import { useAppDispatch } from "./appStore.ts";
+import { css, Global } from "@emotion/react";
+import { toggleResultMode } from "./registerSlice.ts";
 
-function App() {
-  const [count, setCount] = useState(0);
+const globalStyle = css`
+  body {
+    color: rgba(0, 0, 0, 0.87);
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    background-color: rgb(255, 255, 255);
+  }
+`;
+
+export const App = () => {
+  const dispatch = useAppDispatch();
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <Global styles={globalStyle} />
+      <button onClick={() => dispatch(toggleResultMode())}>
+        Berechnungsmodus
+      </button>
+      <CoinBox />
+      <NoteBox />
+      <Envelope />
+    </div>
   );
-}
-
-export default App;
+};
